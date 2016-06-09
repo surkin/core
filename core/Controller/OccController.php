@@ -47,6 +47,7 @@ class OccController extends Controller {
 	}
 
 	/**
+	 * @PublicPage
 	 * @NoCSRFRequired
 	 *
 	 * Execute occ command
@@ -105,6 +106,10 @@ class OccController extends Controller {
 	 * @param $token
 	 */
 	protected function validateRequest($command, $token){
+		if (!in_array($this->request->getRemoteAddress(), ['::1', '127.0.0.1', 'localhost'])) {
+			throw new \UnexpectedValueException(sprintf('Web executor is not allowed to run from a different host', $command));
+		}
+
 		if (!in_array($command, $this->allowedCommands)) {
 			throw new \UnexpectedValueException(sprintf('Command "%s" is not allowed to run via web request', $command));
 		}
