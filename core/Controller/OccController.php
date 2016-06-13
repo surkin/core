@@ -38,6 +38,7 @@ class OccController extends Controller {
 		'app:list',
 		'check',
 		'config:list',
+		'maintenance:mode',
 		'status',
 		'upgrade'
 	];
